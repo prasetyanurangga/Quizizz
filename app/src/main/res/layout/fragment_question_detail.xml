@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:background="@color/background_color"
+        tools:context=".ui.main.QuestionDetailFragment">
+
+        <ImageView
+            android:id="@+id/image_question"
+            android:layout_marginBottom="16dp"
+            android:src="@drawable/ic_launcher_background"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"/>
+
+        <TextView
+            android:id="@+id/question_text_question"
+            android:textSize="10pt"
+            android:layout_marginBottom="16dp"
+            android:textColor="@color/text_color"
+            android:layout_width="wrap_content"
+            android:text="Lebih dahulu monyet atau elang?"
+            android:layout_height="wrap_content"/>
+
+        <CheckBox
+            android:id="@+id/answer_a_question"
+            android:layout_marginTop="0dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Converse" />
+        <CheckBox
+            android:id="@+id/answer_b_question"
+            android:layout_marginTop="0dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Converse" />
+        <CheckBox
+            android:id="@+id/answer_c_question"
+            android:layout_marginTop="0dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Converse" />
+        <CheckBox
+            android:id="@+id/answer_d_question"
+            android:layout_marginTop="0dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Converse" />
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/section_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
