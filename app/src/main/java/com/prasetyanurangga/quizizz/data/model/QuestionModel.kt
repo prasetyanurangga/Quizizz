@@ -1,5 +1,8 @@
 package com.prasetyanurangga.quizizz.data.model
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class QuestionModel(
     val ID: Int,
     val questionText: String,
@@ -9,5 +12,6 @@ data class QuestionModel(
     val answerD: String,
     val correctAnswer: String,
     val isImageQuery: Boolean,
-    val categoryId: Int
-)
+    val categoryId: Int,
+    var isAnswerRight: Boolean? = false
+): Parcelable

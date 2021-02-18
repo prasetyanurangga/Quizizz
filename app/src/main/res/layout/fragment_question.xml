@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:padding="16dp"
         android:background="@color/background_color"
-        tools:context=".ui.main.QuestionDetailFragment">
+        tools:context=".ui.fragment.QuestionDetailFragment">
 
         <ImageView
             android:id="@+id/image_question"
@@ -33,6 +33,7 @@
             android:id="@+id/answer_a_question"
             android:layout_marginTop="0dp"
             android:layout_width="wrap_content"
+            android:onClick="onCheckQuestion"
             android:layout_height="wrap_content"
             android:text="Converse" />
         <CheckBox

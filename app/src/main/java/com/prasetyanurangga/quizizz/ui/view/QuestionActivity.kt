@@ -1,19 +1,21 @@
-package com.prasetyanurangga.quizizz
+package com.prasetyanurangga.quizizz.ui.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
+import android.view.View
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
+import com.prasetyanurangga.quizizz.R
 import com.prasetyanurangga.quizizz.data.model.QuestionModel
-import com.prasetyanurangga.quizizz.ui.main.SectionsPagerAdapter
+import com.prasetyanurangga.quizizz.ui.adapter.QuestionPagerAdapter
 
-class QuestionDetailActivity : AppCompatActivity() {
+class QuestionActivity : AppCompatActivity() {
     val bunchOfQuestion: List<QuestionModel> = listOf(
         QuestionModel(ID = 1, questionText = "Hello2", answerA = "pertama", answerB = "kedua", answerC = "ketiga", answerD = "keempat",isImageQuery = false, correctAnswer = "A", categoryId = 1),
         QuestionModel(ID = 1, questionText = "Hello3", answerA = "pertama", answerB = "kedua", answerC = "ketiga", answerD = "keempat",isImageQuery = false, correctAnswer = "A", categoryId = 1),
@@ -22,26 +24,25 @@ class QuestionDetailActivity : AppCompatActivity() {
         QuestionModel(ID = 1, questionText = "Hello6", answerA = "pertama", answerB = "kedua", answerC = "ketiga", answerD = "keempat",isImageQuery = false, correctAnswer = "A", categoryId = 1)
     )
 
-    lateinit var numOfQuestion: TextView
-    lateinit var numOfScore: TextView
-    lateinit var numOfRightAnswer: TextView
-    lateinit var numOfWrongAnswer: TextView
+    var bunchOfCheck: HashMap<Int,List<String>> = hashMapOf()
+
+    lateinit var countQuestion: TextView
     lateinit var timeLeft: TextView
     lateinit var tabs: TabLayout
     lateinit var viewPager: ViewPager
-    lateinit var completedButton: FloatingActionButton
+    lateinit var finishButton: FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_question_detail)
+        setContentView(R.layout.activity_question)
         initComponent()
         setUpTabLayout()
 
-        numOfQuestion.setText("1/${bunchOfQuestion.size}")
+        countQuestion.setText("1/${bunchOfQuestion.size}")
 
         tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
-                numOfQuestion.setText("${tab.position + 1}/${bunchOfQuestion.size}")
+                countQuestion.setText("${tab.position + 1}/${bunchOfQuestion.size}")
                 Log.e("sekaranggggggfff", tab.position.toString())
             }
             override fun onTabUnselected(tab: TabLayout.Tab) {
@@ -55,25 +56,41 @@ class QuestionDetailActivity : AppCompatActivity() {
         setUpTimer()
 
 
-        completedButton.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+        finishButton.setOnClickListener { view ->
+            val correctCount = bunchOfCheck.count {
+                it.value.isNotEmpty()
+            }
+            Log.e("julah", "$correctCount")
+
+            if(correctCount == bunchOfCheck.size){
+                val intent = Intent(this@QuestionActivity, ResultActivity::class.java).apply {
+                    putExtra("result_quiz", bunchOfCheck)
+                }
+                startActivity(intent)
+            }
+
         }
     }
 
+    private fun onCheck( item :List<String>, position: Int) {
+        bunchOfCheck[position] = item
+        Log.e("check", bunchOfCheck.toString())
+    }
+
+    private fun finishQuiz() {
+
+    }
+
     private fun initComponent() {
-        numOfQuestion = findViewById(R.id.num_all_question)
-        numOfScore = findViewById(R.id.num_score)
-        numOfRightAnswer = findViewById(R.id.num_right_anwser)
-        numOfWrongAnswer = findViewById(R.id.num_wrong_anwser)
-        timeLeft = findViewById(R.id.time_left)
-        tabs = findViewById(R.id.tabs)
-        viewPager = findViewById(R.id.view_pager)
-        completedButton = findViewById(R.id.completed_button)
+        countQuestion = findViewById(R.id.textview_question_countquestion)
+        timeLeft = findViewById(R.id.textview_question_timeleft)
+        tabs = findViewById(R.id.tablayout_question)
+        viewPager = findViewById(R.id.viewpager_question)
+        finishButton = findViewById(R.id.fab_question_finish)
     }
 
     private fun setUpTabLayout() {
-        val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager, bunchOfQuestion)
+        val sectionsPagerAdapter = QuestionPagerAdapter(this, supportFragmentManager, bunchOfQuestion, onCheckChange = ::onCheck)
         viewPager.adapter = sectionsPagerAdapter
         tabs.setupWithViewPager(viewPager)
     }

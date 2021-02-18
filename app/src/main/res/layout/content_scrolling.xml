@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".ResultActivity"
+    tools:context=".ui.view.ResultActivity"
     tools:showIn="@layout/activity_result">
 
     <TextView

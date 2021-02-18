@@ -10,14 +10,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Quizizz">
         <activity
-            android:name=".ResultActivity"
+            android:name=".ui.view.ResultActivity"
             android:label="@string/title_activity_result"
             android:theme="@style/Theme.Quizizz.NoActionBar"></activity>
         <activity
-            android:name=".QuestionDetailActivity"
+            android:name=".ui.view.QuestionActivity"
             android:label="@string/title_activity_question_detail"
             android:theme="@style/Theme.Quizizz.NoActionBar" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".ui.view.CategoryActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
