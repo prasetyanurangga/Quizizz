@@ -2,21 +2,26 @@
 <androidx.cardview.widget.CardView
     android:layout_margin="8dp"
     app:cardElevation="4dp"
-    app:cardBackgroundColor="@color/purple_700"
+    app:cardBackgroundColor="@color/white"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <RelativeLayout
-        android:padding="16dp"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/imageview_listitemcategory"
+            android:layout_width="match_parent"
+            android:scaleType="fitXY"
+            android:layout_height="100dp"/>
         <TextView
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:layout_centerInParent="true"
-            android:id="@+id/content_category"
-            android:layout_width="wrap_content"
+            android:padding="16dp"
+            android:gravity="center|center_vertical"
+            android:textColor="@color/text_color"
+            android:id="@+id/textview_listitemcategory"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-    </RelativeLayout>
+    </LinearLayout>
 </androidx.cardview.widget.CardView>

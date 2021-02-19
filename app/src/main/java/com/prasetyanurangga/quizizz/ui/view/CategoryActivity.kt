@@ -11,8 +11,8 @@ import com.prasetyanurangga.quizizz.ui.adapter.CategoryViewAdapter
 class CategoryActivity : AppCompatActivity() {
     lateinit var categoryRecycleView: RecyclerView
     val bunchOfQuestion: List<CategoryModel> = listOf(
-        CategoryModel(ID = 1, name = "Food and drink", image = "dddd"),
-        CategoryModel(ID = 1, name = "IPS", image = "dddd"),
+        CategoryModel(ID = 1, name = "Food and drink", image = "https://4.img-dpreview.com/files/p/E~TS590x0~articles/3925134721/0266554465.jpeg"),
+        CategoryModel(ID = 1, name = "IPS", image = "https://4.img-dpreview.com/files/p/E~TS590x0~articles/3925134721/0266554465.jpeg"),
         CategoryModel(ID = 1, name = "IPS", image = "dddd"),
         CategoryModel(ID = 1, name = "IPS", image = "dddd"),
         CategoryModel(ID = 1, name = "IPS", image = "dddd"),

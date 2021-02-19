@@ -6,10 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.prasetyanurangga.quizizz.R
 import com.prasetyanurangga.quizizz.data.model.QuestionModel
+import com.squareup.picasso.Picasso
 
 /**
  * A placeholder fragment containing a simple view.
@@ -19,6 +21,8 @@ class QuestionDetailFragment(private val questionModel : QuestionModel, val onCh
     lateinit var  answerBQuestion: CheckBox
     lateinit var  answerCQuestion: CheckBox
     lateinit var  answerDQuestion: CheckBox
+    lateinit var imageQuestion: ImageView
+    lateinit var contentQUestion: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,6 +30,8 @@ class QuestionDetailFragment(private val questionModel : QuestionModel, val onCh
     ): View? {
         val root = inflater.inflate(R.layout.fragment_question, container, false)
         val questionTextQuestion: TextView = root.findViewById(R.id.question_text_question)
+        imageQuestion = root.findViewById(R.id.image_question)
+        contentQUestion= root.findViewById(R.id.question_text_question)
         answerAQuestion= root.findViewById(R.id.answer_a_question)
         answerBQuestion= root.findViewById(R.id.answer_b_question)
         answerCQuestion= root.findViewById(R.id.answer_c_question)
@@ -36,6 +42,19 @@ class QuestionDetailFragment(private val questionModel : QuestionModel, val onCh
         answerCQuestion.text = questionModel.answerC
         answerDQuestion.text = questionModel.answerD
 
+
+
+        if(!questionModel.isImageQuery){
+            imageQuestion.visibility = View.GONE
+        }
+        else{
+            Picasso.get()
+                .load(questionModel.questionImage ?: "")
+                .error(R.drawable.ic_launcher_background)
+                .into(imageQuestion);
+        }
+
+        contentQUestion.text = questionModel.questionText
 
         answerAQuestion.setOnClickListener {
             onCheckChange(onCheckedAnswer(), position)

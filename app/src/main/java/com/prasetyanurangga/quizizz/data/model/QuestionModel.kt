@@ -6,6 +6,7 @@ import kotlinx.android.parcel.Parcelize
 data class QuestionModel(
     val ID: Int,
     val questionText: String,
+    val questionImage: String? = "ffff",
     val answerA: String,
     val answerB: String,
     val answerC: String,

@@ -1,11 +1,14 @@
 package com.prasetyanurangga.quizizz.ui.view
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -17,7 +20,7 @@ import com.prasetyanurangga.quizizz.ui.adapter.QuestionPagerAdapter
 
 class QuestionActivity : AppCompatActivity() {
     val bunchOfQuestion: List<QuestionModel> = listOf(
-        QuestionModel(ID = 1, questionText = "Hello2", answerA = "pertama", answerB = "kedua", answerC = "ketiga", answerD = "keempat",isImageQuery = false, correctAnswer = "A", categoryId = 1),
+        QuestionModel(ID = 1, questionText = "Hello2", answerA = "pertama", answerB = "kedua", answerC = "ketiga", answerD = "keempat",isImageQuery = true, correctAnswer = "A", categoryId = 1, questionImage = "https://4.img-dpreview.com/files/p/E~TS590x0~articles/3925134721/0266554465.jpeg"),
         QuestionModel(ID = 1, questionText = "Hello3", answerA = "pertama", answerB = "kedua", answerC = "ketiga", answerD = "keempat",isImageQuery = false, correctAnswer = "A", categoryId = 1),
         QuestionModel(ID = 1, questionText = "Hello4", answerA = "pertama", answerB = "kedua", answerC = "ketiga", answerD = "keempat",isImageQuery = false, correctAnswer = "A", categoryId = 1),
         QuestionModel(ID = 1, questionText = "Hello5", answerA = "pertama", answerB = "kedua", answerC = "ketiga", answerD = "keempat",isImageQuery = false, correctAnswer = "A", categoryId = 1),
@@ -60,13 +63,16 @@ class QuestionActivity : AppCompatActivity() {
             val correctCount = bunchOfCheck.count {
                 it.value.isNotEmpty()
             }
-            Log.e("julah", "$correctCount")
 
-            if(correctCount == bunchOfCheck.size){
+            if(correctCount == bunchOfQuestion.size){
                 val intent = Intent(this@QuestionActivity, ResultActivity::class.java).apply {
                     putExtra("result_quiz", bunchOfCheck)
                 }
                 startActivity(intent)
+            }
+            else{
+                Snackbar.make(view, "Soal nya Belum Selesai",
+                        Snackbar.LENGTH_LONG).setAction("Action", null).show()
             }
 
         }
@@ -96,16 +102,33 @@ class QuestionActivity : AppCompatActivity() {
     }
 
     private fun setUpTimer() {
-        val timer = object: CountDownTimer(20000, 1000) {
+        val timer = object: CountDownTimer(10000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 val secondUntilFinished = millisUntilFinished/1000
                 timeLeft.setText(secondUntilFinished.toString())
             }
 
             override fun onFinish() {
-
+                timeisOut()
             }
         }
         timer.start()
+    }
+
+    fun timeisOut() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Peringatan")
+        builder.setMessage("Waktu Habis")
+//builder.setPositiveButton("OK", DialogInterface.OnClickListener(function = x))
+
+        builder.setPositiveButton("OK") { dialog, which ->
+            val intent = Intent(this@QuestionActivity, ResultActivity::class.java).apply {
+                putExtra("result_quiz", bunchOfCheck)
+            }
+            startActivity(intent)
+        }
+        builder.setCancelable(false)
+        builder.show()
+
     }
 }

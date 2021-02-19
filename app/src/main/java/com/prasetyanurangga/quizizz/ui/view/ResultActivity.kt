@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.prasetyanurangga.quizizz.R
 import com.prasetyanurangga.quizizz.data.model.QuestionModel
-import com.prasetyanurangga.quizizz.ui.Question
 import com.prasetyanurangga.quizizz.ui.adapter.ResultViewAdapter
 
 class ResultActivity : AppCompatActivity() {
@@ -62,7 +61,7 @@ class ResultActivity : AppCompatActivity() {
 
         Log.e("setelah di check", bunchOfQuestion.toString())
 
-        val adapters = ResultViewAdapter(this, bunchOfQuestion)
+        val adapters = ResultViewAdapter(this, bunchOfQuestion, resultQuiz)
         categoryRecycleView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = adapters
@@ -84,5 +83,9 @@ class ResultActivity : AppCompatActivity() {
         countScore = findViewById(R.id.textview_result_countscore)
         countRightAnswer = findViewById(R.id.textview_result_rightanswer)
         countWrongAnswer = findViewById(R.id.textview_result_wronganswer)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
     }
 }
