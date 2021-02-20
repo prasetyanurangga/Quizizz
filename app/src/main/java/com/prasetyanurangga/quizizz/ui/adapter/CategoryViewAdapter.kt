@@ -26,23 +26,32 @@ class CategoryViewAdapter(
     }
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
-        holder.bindItem(bunchOfCategory[position], context);
+        holder.bindItem(bunchOfCategory[position]);
 
         holder.itemView.setOnClickListener {
-            context.startActivity(Intent(context, QuestionActivity::class.java))
+            val intent = Intent(context, QuestionActivity::class.java).apply {
+                putExtra("category_id", bunchOfCategory[position].ID)
+                putExtra("category_name", bunchOfCategory[position].name)
+            }
+            context.startActivity(intent)
         }
     }
 
     class CategoryViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private  val contentCategory: TextView = view.findViewById(R.id.textview_listitemcategory)
-        private  val imageCategory: ImageView = view.findViewById(R.id.imageview_listitemcategory)
+        private  val listItemCategoryName: TextView = view.findViewById(R.id.textview_listitemcategory)
+        private  val listItemCategoryImage: ImageView = view.findViewById(R.id.imageview_listitemcategory)
 
-        fun bindItem(items: CategoryModel, context: Context){
-            contentCategory.text = items.name
-            Picasso.get()
-                .load(items.image)
-                .error(R.drawable.ic_launcher_background)
-                .into(imageCategory);
+        fun bindItem(items: CategoryModel){
+            listItemCategoryName.text = items.name
+            if (items.image.isNullOrEmpty()) {
+                listItemCategoryImage.setImageResource(R.drawable.ic_launcher_background);
+            } else{
+                Picasso.get()
+                    .load(items.image)
+                    .error(R.drawable.ic_launcher_background)
+                    .into(listItemCategoryImage);
+            }
+
         }
     }
 

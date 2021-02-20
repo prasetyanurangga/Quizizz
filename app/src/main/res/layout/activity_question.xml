@@ -12,7 +12,7 @@
         android:theme="@style/Theme.Quizizz.AppBarOverlay">
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/textview_question_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -22,64 +22,66 @@
             android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title" />
             <LinearLayout
                 android:layout_width="match_parent"
-                android:paddingLeft="16dp"
-                android:paddingBottom="8dp"
-                android:paddingTop="24dp"
+                android:paddingLeft="@dimen/base_size_scale_2"
+                android:paddingBottom="@dimen/base_size_scale_1"
+                android:paddingTop="@dimen/base_size_scale_3"
                 android:orientation="horizontal"
-                android:paddingRight="16dp"
+                android:paddingRight="@dimen/base_size_scale_2"
                 android:layout_height="wrap_content">
                 <androidx.cardview.widget.CardView
-                    android:layout_marginRight="8dp"
-                    android:id="@+id/cardview_question_question"
+                    android:layout_marginRight="@dimen/base_size_scale_1"
                     android:layout_width="wrap_content"
-                    app:cardBackgroundColor="@color/purple_400"
-                    android:layout_height="wrap_content">
+                    app:cardBackgroundColor="@color/primary"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/base_size_scale_1">
                     <LinearLayout
-                        android:padding="8dp"
+                        android:padding="@dimen/base_size_scale_1"
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                         <TextView
-                            android:textSize="6pt"
+                            android:textSize="@dimen/base_text_size_scale_1"
                             android:textColor="@color/white"
                             android:layout_width="wrap_content"
-                            android:text="Soal "
-                            android:layout_height="wrap_content">
+                            android:text="@string/question_text"
+                            android:layout_marginRight="@dimen/base_size_scale_1"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/base_size_scale_1">
                         </TextView>
                         <TextView
-                            android:textSize="6pt"
-                            android:gravity="right"
+                            android:textSize="@dimen/base_text_size_scale_1"
                             android:id="@+id/textview_question_countquestion"
                             android:textColor="@color/white"
                             android:layout_width="match_parent"
-                            android:text="1/6"
+                            android:text="@string/zero_text"
                             android:layout_height="wrap_content">
                         </TextView>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
-                    app:cardBackgroundColor="@color/purple_400"
+                    app:cardBackgroundColor="@color/primary"
                     android:layout_height="wrap_content">
                     <LinearLayout
-                        android:padding="8dp"
+                        android:padding="@dimen/base_size_scale_1"
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                         <TextView
-                            android:textSize="6pt"
+                            android:textSize="@dimen/base_text_size_scale_1"
                             android:textColor="@color/white"
                             android:layout_width="wrap_content"
-                            android:text="Waktu "
-                            android:layout_height="wrap_content">
+                            android:text="@string/time_text"
+                            android:layout_marginRight="@dimen/base_size_scale_1"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/base_size_scale_1">
                         </TextView>
                         <TextView
-                            android:textSize="6pt"
-                            android:gravity="right"
+                            android:textSize="@dimen/base_text_size_scale_1"
                             android:textColor="@color/white"
                             android:id="@+id/textview_question_timeleft"
                             android:layout_width="match_parent"
-                            android:text="40.0"
+                            android:text="@string/zero_text"
                             android:layout_height="wrap_content">
                         </TextView>
                     </LinearLayout>
@@ -100,6 +102,7 @@
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewpager_question"
+        android:background="@color/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />

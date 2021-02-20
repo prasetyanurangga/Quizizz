@@ -1,64 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_height="match_parent"
-        android:padding="16dp"
-        android:background="@color/background_color"
+        android:background="@color/background"
         tools:context=".ui.fragment.QuestionDetailFragment">
 
-        <ImageView
-            android:id="@+id/image_question"
-            android:layout_marginBottom="16dp"
-            android:src="@drawable/ic_launcher_background"
+        <androidx.cardview.widget.CardView
+            app:cardCornerRadius="@dimen/base_size_scale_1"
+            android:layout_marginTop="@dimen/base_size_scale_2"
+            android:layout_marginLeft="@dimen/base_size_scale_2"
+            android:layout_marginRight="@dimen/base_size_scale_2"
+            android:layout_marginBottom="@dimen/base_size_scale_1"
+            app:cardBackgroundColor="@color/white"
             android:layout_width="match_parent"
-            android:layout_height="200dp"/>
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:padding="@dimen/base_size_scale_2"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/imagevie_question_questionimage"
+                    android:layout_marginBottom="@dimen/base_size_scale_2"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_launcher_background"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/base_size_scale_25"
+                    android:contentDescription="@string/question_image_text" />
 
-        <TextView
-            android:id="@+id/question_text_question"
-            android:textSize="10pt"
-            android:layout_marginBottom="16dp"
-            android:textColor="@color/text_color"
-            android:layout_width="wrap_content"
-            android:text="Lebih dahulu monyet atau elang?"
-            android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/textview_question_questiontext"
+                    android:textSize="@dimen/base_text_size_scale_1_quater"
+                    android:textColor="@color/dark_grey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
-        <CheckBox
-            android:id="@+id/answer_a_question"
-            android:layout_marginTop="0dp"
-            android:layout_width="wrap_content"
-            android:onClick="onCheckQuestion"
+        <com.google.android.material.chip.Chip
+            app:chipIconSize="@dimen/base_size_scale_4"
+            app:chipBackgroundColor="@color/primary_dark"
+            android:layout_marginBottom="@dimen/base_size_scale_1"
+            android:layout_marginLeft="@dimen/base_size_scale_2"
+            android:layout_marginRight="@dimen/base_size_scale_2"
+            android:layout_marginTop="8dp"
+            app:chipMinHeight="@dimen/base_size_scale_5"
+            android:textColor="@color/white"
+            app:closeIcon="@drawable/ic_check"
+            android:id="@+id/chip_question_answera"
+            style="@style/Widget.MaterialComponents.Chip.Entry"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Converse" />
-        <CheckBox
-            android:id="@+id/answer_b_question"
-            android:layout_marginTop="0dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Converse" />
-        <CheckBox
-            android:id="@+id/answer_c_question"
-            android:layout_marginTop="0dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Converse" />
-        <CheckBox
-            android:id="@+id/answer_d_question"
-            android:layout_marginTop="0dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Converse" />
+            app:closeIconEnabled="false"/>
 
-        <TextView
-            android:visibility="gone"
-            android:id="@+id/section_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.chip.Chip
+            app:chipIconSize="@dimen/base_size_scale_4"
+            app:chipBackgroundColor="@color/primary_dark"
+            android:layout_marginBottom="@dimen/base_size_scale_1"
+            android:layout_marginLeft="@dimen/base_size_scale_2"
+            android:layout_marginRight="@dimen/base_size_scale_2"
+            android:layout_marginTop="8dp"
+            app:chipMinHeight="@dimen/base_size_scale_5"
+            android:textColor="@color/white"
+            app:closeIcon="@drawable/ic_check"
+            android:id="@+id/chip_question_answerb"
+            style="@style/Widget.MaterialComponents.Chip.Entry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:closeIconEnabled="false"/>
+        <com.google.android.material.chip.Chip
+            app:chipIconSize="@dimen/base_size_scale_4"
+            app:chipBackgroundColor="@color/primary_dark"
+            android:layout_marginBottom="@dimen/base_size_scale_1"
+            android:layout_marginLeft="@dimen/base_size_scale_2"
+            android:layout_marginRight="@dimen/base_size_scale_2"
+            android:layout_marginTop="8dp"
+            app:chipMinHeight="@dimen/base_size_scale_5"
+            android:textColor="@color/white"
+            app:closeIcon="@drawable/ic_check"
+            android:id="@+id/chip_question_answerc"
+            style="@style/Widget.MaterialComponents.Chip.Entry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:closeIconEnabled="false"/>
+        <com.google.android.material.chip.Chip
+            app:chipIconSize="@dimen/base_size_scale_4"
+            app:chipBackgroundColor="@color/primary_dark"
+            android:layout_marginBottom="@dimen/base_size_scale_1"
+            android:layout_marginLeft="@dimen/base_size_scale_2"
+            android:layout_marginRight="@dimen/base_size_scale_2"
+            android:layout_marginTop="8dp"
+            app:chipMinHeight="@dimen/base_size_scale_5"
+            android:textColor="@color/white"
+            app:closeIcon="@drawable/ic_check"
+            android:id="@+id/chip_question_answerd"
+            style="@style/Widget.MaterialComponents.Chip.Entry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:closeIconEnabled="false"/>
+
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

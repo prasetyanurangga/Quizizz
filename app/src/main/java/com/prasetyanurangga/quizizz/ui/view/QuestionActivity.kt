@@ -1,52 +1,56 @@
 package com.prasetyanurangga.quizizz.ui.view
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.util.Log
-import android.view.View
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
+import com.prasetyanurangga.kamar.util.Constanta
+import com.prasetyanurangga.quizizz.QuizizzApplication
 import com.prasetyanurangga.quizizz.R
-import com.prasetyanurangga.quizizz.data.model.QuestionModel
+import com.prasetyanurangga.quizizz.data.di.factory.QuestionViewModelFactory
 import com.prasetyanurangga.quizizz.ui.adapter.QuestionPagerAdapter
+import com.prasetyanurangga.quizizz.ui.viewmodel.QuestionViewModel
+import javax.inject.Inject
 
 class QuestionActivity : AppCompatActivity() {
-    val bunchOfQuestion: List<QuestionModel> = listOf(
-        QuestionModel(ID = 1, questionText = "Hello2", answerA = "pertama", answerB = "kedua", answerC = "ketiga", answerD = "keempat",isImageQuery = true, correctAnswer = "A", categoryId = 1, questionImage = "https://4.img-dpreview.com/files/p/E~TS590x0~articles/3925134721/0266554465.jpeg"),
-        QuestionModel(ID = 1, questionText = "Hello3", answerA = "pertama", answerB = "kedua", answerC = "ketiga", answerD = "keempat",isImageQuery = false, correctAnswer = "A", categoryId = 1),
-        QuestionModel(ID = 1, questionText = "Hello4", answerA = "pertama", answerB = "kedua", answerC = "ketiga", answerD = "keempat",isImageQuery = false, correctAnswer = "A", categoryId = 1),
-        QuestionModel(ID = 1, questionText = "Hello5", answerA = "pertama", answerB = "kedua", answerC = "ketiga", answerD = "keempat",isImageQuery = false, correctAnswer = "A", categoryId = 1),
-        QuestionModel(ID = 1, questionText = "Hello6", answerA = "pertama", answerB = "kedua", answerC = "ketiga", answerD = "keempat",isImageQuery = false, correctAnswer = "A", categoryId = 1)
-    )
+    @Inject
+    lateinit var questionViewModelFactory: QuestionViewModelFactory
+    private lateinit var questionViewModel: QuestionViewModel
 
-    var bunchOfCheck: HashMap<Int,List<String>> = hashMapOf()
+    private var bunchOfCheck: HashMap<Int,List<String>> = hashMapOf()
 
-    lateinit var countQuestion: TextView
-    lateinit var timeLeft: TextView
-    lateinit var tabs: TabLayout
-    lateinit var viewPager: ViewPager
-    lateinit var finishButton: FloatingActionButton
+    private lateinit var countQuestion: TextView
+    private lateinit var timeLeft: TextView
+    private lateinit var categoryName: TextView
+    private lateinit var tabs: TabLayout
+    private lateinit var viewPager: ViewPager
+    private lateinit var finishButton: FloatingActionButton
+    var numQuestion:Int = 0
+    private var categoryId: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_question)
-        initComponent()
-        setUpTabLayout()
+        categoryId = intent.getIntExtra("category_id", 0)
 
-        countQuestion.setText("1/${bunchOfQuestion.size}")
+        injectDagger()
+        createViewModel()
+        initComponent()
+        setUpQuestion(categoryId)
+
+        categoryName.text = intent.getStringExtra("category_name")
+        countQuestion.text = getString(R.string.count_question_text, numQuestion)
 
         tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
-                countQuestion.setText("${tab.position + 1}/${bunchOfQuestion.size}")
-                Log.e("sekaranggggggfff", tab.position.toString())
+                countQuestion.text = getString(R.string.count_question_text, numQuestion)
             }
             override fun onTabUnselected(tab: TabLayout.Tab) {
 
@@ -56,79 +60,122 @@ class QuestionActivity : AppCompatActivity() {
             }
         })
 
-        setUpTimer()
+        finishButton.setOnClickListener {
+            finishQuiz()
+        }
+    }
 
+    private fun injectDagger() {
+        QuizizzApplication.instance.appComponent.inject(this)
+    }
 
-        finishButton.setOnClickListener { view ->
-            val correctCount = bunchOfCheck.count {
-                it.value.isNotEmpty()
-            }
+    private fun createViewModel() {
+        questionViewModel = ViewModelProvider(this, questionViewModelFactory).get(QuestionViewModel::class.java)
+    }
 
-            if(correctCount == bunchOfQuestion.size){
-                val intent = Intent(this@QuestionActivity, ResultActivity::class.java).apply {
-                    putExtra("result_quiz", bunchOfCheck)
-                }
-                startActivity(intent)
+    private fun setUpQuestion(category_id: Int) {
+        questionViewModel.getQuestionsByCategoryId(category_id).observe(this, Observer {
+            numQuestion = it.size
+            if(numQuestion > 0){
+                setUpTimer(numQuestion.toLong() * Constanta.Question.TIME_PER_QUESTION)
+                val sectionsPagerAdapter = QuestionPagerAdapter(this, supportFragmentManager, it, onCheckChange = ::onCheck)
+                viewPager.adapter = sectionsPagerAdapter
+                tabs.setupWithViewPager(viewPager)
             }
             else{
-                Snackbar.make(view, "Soal nya Belum Selesai",
-                        Snackbar.LENGTH_LONG).setAction("Action", null).show()
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle(getString(R.string.warning_text))
+                builder.setMessage(getString(R.string.question_not_found_text))
+                builder.setPositiveButton(getString(R.string.ok_text)) { _, _ ->
+                    super.onBackPressed()
+                }
+                builder.setCancelable(false)
+                builder.show()
             }
+        })
+    }
 
+    private fun getCorrectQuestion(): Int{
+        return bunchOfCheck.count {
+            it.value.isNotEmpty()
         }
     }
 
     private fun onCheck( item :List<String>, position: Int) {
         bunchOfCheck[position] = item
-        Log.e("check", bunchOfCheck.toString())
     }
 
     private fun finishQuiz() {
+        if(getCorrectQuestion() == numQuestion){
+            val intent = Intent(this@QuestionActivity, ResultActivity::class.java).apply {
+                putExtra("result_quiz", bunchOfCheck)
+                putExtra("category_id", categoryId)
+            }
+            startActivity(intent)
+        }
+        else{
+            showAlertEndQuiz(false)
+        }
+    }
 
+    private fun showAlertEndQuiz(isToHome: Boolean) {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(getString(R.string.warning_text))
+        builder.setMessage(getString(R.string.warning_ends_quiz_text))
+        builder.setPositiveButton(getString(R.string.yes_text)) { _, _ ->
+            if (!isToHome) goToResultActivity() else super.onBackPressed()
+        }
+        builder.setNegativeButton(getString(R.string.no_text)) { dialog, _ ->
+            dialog.dismiss()
+        }
+        builder.setCancelable(false)
+        builder.show()
     }
 
     private fun initComponent() {
         countQuestion = findViewById(R.id.textview_question_countquestion)
         timeLeft = findViewById(R.id.textview_question_timeleft)
+        categoryName = findViewById(R.id.textview_question_category)
         tabs = findViewById(R.id.tablayout_question)
         viewPager = findViewById(R.id.viewpager_question)
         finishButton = findViewById(R.id.fab_question_finish)
     }
 
-    private fun setUpTabLayout() {
-        val sectionsPagerAdapter = QuestionPagerAdapter(this, supportFragmentManager, bunchOfQuestion, onCheckChange = ::onCheck)
-        viewPager.adapter = sectionsPagerAdapter
-        tabs.setupWithViewPager(viewPager)
-    }
-
-    private fun setUpTimer() {
-        val timer = object: CountDownTimer(10000, 1000) {
+    private fun setUpTimer(timeInMilis: Long) {
+        val timer = object: CountDownTimer(timeInMilis, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 val secondUntilFinished = millisUntilFinished/1000
-                timeLeft.setText(secondUntilFinished.toString())
+                timeLeft.text = secondUntilFinished.toString()
             }
 
             override fun onFinish() {
-                timeisOut()
+                showAlertTimeIsOut()
             }
         }
         timer.start()
     }
 
-    fun timeisOut() {
+    fun showAlertTimeIsOut() {
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("Peringatan")
-        builder.setMessage("Waktu Habis")
-//builder.setPositiveButton("OK", DialogInterface.OnClickListener(function = x))
-
-        builder.setPositiveButton("OK") { dialog, which ->
-            val intent = Intent(this@QuestionActivity, ResultActivity::class.java).apply {
-                putExtra("result_quiz", bunchOfCheck)
-            }
-            startActivity(intent)
+        builder.setTitle(getString(R.string.warning_text))
+        builder.setMessage(getString(R.string.time_out_text))
+        builder.setPositiveButton(getString(R.string.ok_text)) { _, _ ->
+            goToResultActivity()
         }
         builder.setCancelable(false)
         builder.show()
 
+    }
+
+    private fun goToResultActivity() {
+        val intent = Intent(this@QuestionActivity, ResultActivity::class.java).apply {
+            putExtra("result_quiz", bunchOfCheck)
+            putExtra("category_id", categoryId)
+        }
+        startActivity(intent)
+    }
+
+    override fun onBackPressed() {
+        showAlertEndQuiz(true)
     }
 }

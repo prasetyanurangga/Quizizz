@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
-    android:layout_margin="8dp"
-    app:cardElevation="4dp"
+    android:layout_margin="@dimen/base_size_scale_1"
+    app:cardElevation="@dimen/base_size_scale_half"
     app:cardBackgroundColor="@color/white"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -15,11 +15,12 @@
             android:id="@+id/imageview_listitemcategory"
             android:layout_width="match_parent"
             android:scaleType="fitXY"
-            android:layout_height="100dp"/>
+            android:layout_height="@dimen/base_size_scale_12"
+            android:contentDescription="@string/category_image_text" />
         <TextView
-            android:padding="16dp"
+            android:padding="@dimen/base_size_scale_2"
             android:gravity="center|center_vertical"
-            android:textColor="@color/text_color"
+            android:textColor="@color/dark_grey"
             android:id="@+id/textview_listitemcategory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>

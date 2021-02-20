@@ -36,20 +36,19 @@ class ResultViewAdapter(
     }
 
     class QuestionViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val listItemQuestion: TextView = view.findViewById(R.id.list_item_question)
-        private val listItemIcon: ImageView = view.findViewById(R.id.list_item_icon)
-        private val listItemRightAnswer: TextView = view.findViewById(R.id.list_item_right_answer)
-        private val listItemYourAnswer: TextView = view.findViewById(R.id.list_item_your_answer)
+        private val listItemQuestion: TextView = view.findViewById(R.id.textview_listitemresult_question)
+        private val listItemIcon: ImageView = view.findViewById(R.id.imageview_listitemresult_icon)
+        private val listItemCorrectAnswer: TextView = view.findViewById(R.id.textview_listitemresult_correctanswer)
+        private val listItemUserAnswer: TextView = view.findViewById(R.id.textview_listitemresult_useranswer)
 
         fun bindItem(items: QuestionModel,answers: List<String>, context: Context, position: Int){
-            listItemQuestion.text = "Soal Nomor ${position + 1}"
+            listItemQuestion.text = context.getString(R.string.question_no_text, position+1)
             val answer = if(answers.isNotEmpty()) answers.joinToString(",") else "-"
             val isAnswerRight = items.isAnswerRight ?: false
-            val iconColorQuestion = if(isAnswerRight) R.color.green_400 else R.color.red_400
-            listItemIcon.setImageResource(if(isAnswerRight) R.drawable.ic_check else R.drawable.ic_baseline)
-            listItemIcon.setColorFilter(ContextCompat.getColor(context, iconColorQuestion), android.graphics.PorterDuff.Mode.SRC_IN);
-            listItemYourAnswer.text = "Jawaban Anda adalah $answer"
-            listItemRightAnswer.text = "Jawaban yang Benar adalah ${items.correctAnswer}"
+            listItemIcon.setImageResource(if(isAnswerRight) R.drawable.ic_check else R.drawable.ic_close)
+            listItemIcon.setColorFilter(ContextCompat.getColor(context, if(isAnswerRight) R.color.correct else R.color.wrong), android.graphics.PorterDuff.Mode.SRC_IN);
+            listItemUserAnswer.text = context.getString(R.string.user_answer_text, answer)
+            listItemCorrectAnswer.text = context.getString(R.string.correct_answer_text, items.correctAnswer)
         }
     }
 

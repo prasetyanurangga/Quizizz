@@ -20,7 +20,7 @@
             android:gravity="center"
             android:minHeight="?actionBarSize"
             android:padding="@dimen/appbar_padding"
-            android:text="@string/app_name"
+            android:text="@string/achievement_text"
             android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title" />
 
         <LinearLayout
@@ -33,88 +33,91 @@
             android:weightSum="4"
             android:layout_height="wrap_content">
             <androidx.cardview.widget.CardView
-                android:layout_marginRight="8dp"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                app:cardBackgroundColor="@color/purple_400"
-                android:layout_height="wrap_content">
+                android:layout_marginRight="@dimen/base_size_scale_1"
+                android:layout_width="wrap_content"
+                app:cardBackgroundColor="@color/primary"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/base_size_scale_1">
                 <LinearLayout
-                    android:padding="8dp"
+                    android:padding="@dimen/base_size_scale_1"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <TextView
-                        android:textSize="6pt"
+                        android:textSize="@dimen/base_text_size_scale_1"
                         android:textColor="@color/white"
                         android:layout_width="wrap_content"
-                        android:text="Skor "
-                        android:layout_height="wrap_content">
+                        android:text="@string/score_text"
+                        android:layout_marginRight="@dimen/base_size_scale_1"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/base_size_scale_1">
                     </TextView>
                     <TextView
-                        android:textSize="6pt"
-                        android:gravity="right"
+                        android:textSize="@dimen/base_text_size_scale_1"
                         android:id="@+id/textview_result_countscore"
                         android:textColor="@color/white"
                         android:layout_width="match_parent"
-                        android:text="237"
+                        android:text="@string/zero_text"
                         android:layout_height="wrap_content">
                     </TextView>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
-                android:layout_marginRight="8dp"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                app:cardBackgroundColor="@color/purple_400"
-                android:layout_height="wrap_content">
+                android:layout_marginRight="@dimen/base_size_scale_1"
+                android:layout_width="wrap_content"
+                app:cardBackgroundColor="@color/primary"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/base_size_scale_1">
                 <LinearLayout
-                    android:padding="8dp"
+                    android:padding="@dimen/base_size_scale_1"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <TextView
-                        android:textSize="6pt"
+                        android:textSize="@dimen/base_text_size_scale_1"
                         android:textColor="@color/white"
                         android:layout_width="wrap_content"
-                        android:text="Benar "
-                        android:layout_height="wrap_content">
+                        android:layout_marginRight="@dimen/base_size_scale_1"
+                        android:text="@string/correct_text"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/base_size_scale_1">
                     </TextView>
                     <TextView
-                        android:textSize="6pt"
-                        android:gravity="right"
+                        android:textSize="@dimen/base_text_size_scale_1"
                         android:id="@+id/textview_result_rightanswer"
                         android:textColor="@color/white"
                         android:layout_width="match_parent"
-                        android:text="80"
+                        android:text="@string/zero_text"
                         android:layout_height="wrap_content">
                     </TextView>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
-                android:layout_marginRight="8dp"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                app:cardBackgroundColor="@color/purple_400"
-                android:layout_height="wrap_content">
+                android:layout_marginRight="@dimen/base_size_scale_1"
+                android:layout_width="wrap_content"
+                app:cardBackgroundColor="@color/primary"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/base_size_scale_1">
                 <LinearLayout
-                    android:padding="8dp"
+                    android:padding="@dimen/base_size_scale_1"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <TextView
-                        android:textSize="6pt"
+                        android:textSize="@dimen/base_text_size_scale_1"
                         android:textColor="@color/white"
                         android:layout_width="wrap_content"
-                        android:text="Salah "
-                        android:layout_height="wrap_content">
+                        android:layout_marginRight="@dimen/base_size_scale_1"
+                        android:text="@string/wrong_text"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/base_size_scale_1">
                     </TextView>
                     <TextView
-                        android:textSize="6pt"
-                        android:gravity="right"
+                        android:textSize="@dimen/base_text_size_scale_1"
                         android:textColor="@color/white"
                         android:id="@+id/textview_result_wronganswer"
                         android:layout_width="match_parent"
-                        android:text="20"
+                        android:text="@string/zero_text"
                         android:layout_height="wrap_content">
                     </TextView>
                 </LinearLayout>
@@ -130,22 +133,23 @@
         android:layout_height="match_parent">
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
+            android:paddingTop="@dimen/base_size_scale_1"
+            android:paddingBottom="@dimen/base_size_scale_1"
             android:layout_weight="1"
             android:id="@+id/recyclerview_result"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_height="0dp"/>
 
         <Button
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="16dp"
-            android:padding="16dp"
-            android:background="@color/purple_400"
+            android:layout_marginLeft="@dimen/base_size_scale_2"
+            android:layout_marginRight="@dimen/base_size_scale_2"
+            android:layout_marginBottom="@dimen/base_size_scale_2"
+            android:id="@+id/button_result_tohome"
+            android:padding="@dimen/base_size_scale_2"
+            android:background="@color/primary"
             android:textColor="@color/white"
             android:layout_width="match_parent"
-            android:text="Kembali Ke Menu"
+            android:text="@string/back_to_home_text"
             android:layout_height="wrap_content"/>
     </LinearLayout>
 

@@ -3,23 +3,18 @@
     package="com.prasetyanurangga.quizizz">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 
     <application
+        android:name=".QuizizzApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Quizizz">
-        <activity
-            android:name=".ui.view.ResultActivity"
-            android:label="@string/title_activity_result"
-            android:theme="@style/Theme.Quizizz.NoActionBar"></activity>
-        <activity
-            android:name=".ui.view.QuestionActivity"
-            android:label="@string/title_activity_question_detail"
-            android:theme="@style/Theme.Quizizz.NoActionBar" />
+        android:theme="@style/Theme.Quizizz"
+        android:fullBackupContent="@xml/backup_descriptor">
         <activity android:name=".ui.view.CategoryActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,6 +22,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".ui.view.ResultActivity"
+            android:theme="@style/Theme.Quizizz.NoActionBar"/>
+        <activity
+            android:name=".ui.view.QuestionActivity"
+            android:theme="@style/Theme.Quizizz.NoActionBar" />
     </application>
 
 </manifest>
